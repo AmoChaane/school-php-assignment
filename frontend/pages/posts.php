@@ -5,19 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posts</title>
     <link rel="stylesheet" href="../styles/posts.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
 </head>
 <body>
     <div class="nav">
         <div class="div">
             <h1>Nexus</h1>
-            <input type="text" placeholder="Search for a user">
+            <form class="search" style="display: flex; align-items: center; gap: 7px;">
+                <input type="text" placeholder="Search for a user">
+                <a href="search.php" class="material-symbols-outlined" style="color: white; cursor: pointer; text-decoration: none;">search</a>
+            </form>
         </div>
-        <div class="profile">
+        <a href="profile.php" class="profile">
             AC
-        </div>
+        </a>
     </div>
     <main>
-        <h1 class="welcome">Welcome Amogelang Chaane</h1>
+        <h1 class="welcome">Welcome, Amogelang Chaane</h1>
         <div class="main-inner">
             <form class="my-post">
                 <div class="inner">

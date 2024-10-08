@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #F0F3F4; 
+    font-family: Raleway, sans-serif;
+}
+  
+
+
+.nav {
+    background-color: #EF5350;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav div {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav div h1 {
+    color: white;
+}
+
+.nav div a {
+    color: white;
+}
+
+main {
+    padding: 30px;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.post .image-container img {
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.image-container img {
+    height: 8rem;
+    width: 8rem;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.inner-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.inner-info * {
+    font-size: 1.3rem;
+}
+
+.extra-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.extra-info p span {
+    font-weight: 900;
+}
+
+.posts {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.post {
+    background-color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 9px;
+}
+
+.profile-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 70px;
+}
+
+@media (min-width: 800px) {
+    .post {
+        width: 60vw;
+    }
+}
+
+@media (min-width: 1000px) {
+    .post {
+        width: 50vw;
+    }
+}
+
+@media (min-width: 1250px) {
+    .post {
+        width: 45vw;
+    }
+}
+
+.post .info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.posts-heading {
+    margin-bottom: 7px;
+    color: #494545;
+}
+
+.dim-text {
+    color: #65676b;
+}
+
+.primary-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.primary-info .button {
+    padding: 6px 9px;
+    background-color: #EF5350;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    color: white;
+    font-size: medium;
+    text-decoration: none;
+}
