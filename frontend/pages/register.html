@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="../styles/register.css">
+</head>
+<body>
+    <form class="register">
+        <h2>NEXUS</h2>
+        <p>Please Register</p>
+        <input type="text" placeholder="First Name" name="firstName"/>
+        <input type="text" placeholder="Last Name" name="lastName" />
+        <input type="text" placeholder="Email" name="email"/>
+        <input type="password" placeholder="Password" name="password"/>
+        <p class="error" style="color: red; margin: 0;"></p>
+        <p class="success" style="color: green; margin: 0;"></p>
+        <input type="submit" value="Create Account" name="submit"/>
+        <div class="links">
+            <a href="login.html">Log In</a>
+        </div>
+    </form>
+
+    <script>
+        const form = document.querySelector("form.register");
+        const error = document.querySelector(".error");
+        const success = document.querySelector(".success");
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                const data = JSON.parse(this.response);
+                if(data.response == "Successfully created account") {
+                    error.textContent = "";
+                    success.textContent = data.response;
+                    localStorage.setItem("userData", this.response);
+                    window.location.href='posts.html';
+                }
+                else {
+                    success.textContent = "";
+                    error.textContent = data.response;
+                }
+            }
+            };
+            xmlhttp.open("POST", "../../backend/register.php", true);
+            xmlhttp.send(formData);
+            
+        })
+    </script>
+</body>
+</html>

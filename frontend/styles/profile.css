@@ -17,6 +17,7 @@ body {
     padding: 10px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .nav div {
@@ -42,19 +43,39 @@ main {
     align-items: center;
     gap: 10px;
 }
-
+/* 
 .post .image-container img {
     height: 50px;
     width: 50px;
     object-fit: cover;
     border-radius: 50%;
-}
+} */
 
 .image-container img {
     height: 8rem;
     width: 8rem;
     object-fit: cover;
     border-radius: 50%;
+}
+
+.image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-container .p {
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    background-color: #EF5350;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bolder;
 }
 
 .inner-info {
@@ -146,4 +167,9 @@ main {
     color: white;
     font-size: medium;
     text-decoration: none;
+}
+
+.logout {
+    /* text-decoration: none; */
+    color: white;
 }

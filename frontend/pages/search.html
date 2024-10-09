@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link rel="stylesheet" href="../styles/search.css">
+</head>
+<body>
+    <div class="nav">
+        <div class="div">
+            <h1>Nexus</h1>
+            <a href="posts.html">Home</a>
+        </div>
+        <a href="profile.html" class="profile">
+            AC
+        </a>
+    </div>
+    <main>
+        <form class="search-form">
+            <div class="search-container">
+                <h2>Search Users</h2>
+                <input type="text" placeholder="Seach by name or email">
+                <button type="submit">Search</button>
+            </div>
+            <h2>Search Results</h2>
+        </form>
+        <div class="search-results">
+            <!-- <div class="result">
+                <p class="name">Name: Amogelang Chaane</p>
+                <p class="email">Email: amogelangchaane@gmail.com</p>
+                <a href="profile.html" class="view-profile">View Profile</a>
+            </div> -->
+        </div>
+    </main>
+
+    <script>
+        const d = localStorage.getItem("userData")
+        if(!d) {
+            window.location.href='login.html';
+        }
+        
+        const userData = JSON.parse(d);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('searchQuery');
+
+        document.querySelector(".search-container input").value = searchQuery;
+
+        search(searchQuery);
+
+        function search(query) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                const data = JSON.parse(this.response);
+                const finalResponse = Object.values(data.results); // an array of the results
+
+                const resultsContainer = document.querySelector(".search-results");
+
+                resultsContainer.innerHTML = "";
+                finalResponse.forEach(i => {
+                    resultsContainer.innerHTML += i.html;
+                });
+                
+            }
+            };
+            xmlhttp.open("GET", `../../backend/search.php?action=Search&search_query=${query}`, true);
+            xmlhttp.send();
+        }
+
+        const form = document.querySelector(".search-form");
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            formData.append("action", "Search");
+
+            const data = document.querySelector(".search-form input").value;
+
+            search(data);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="../styles/profile.css">
+</head>
+<body>
+    <div class="nav">
+        <div class="div">
+            <h1>Nexus</h1>
+            <a href="posts.html">Home</a>
+        </div>
+        <a class="logout" href="login.html">Log Out</a>
+    </div>
+    <main>
+        <div class="profile-container">
+            <div class="profile-info">
+                <div class="image-container">
+                    <img src="../assets/images/face4.jpg" alt="" srcset="">
+                </div>
+                <div class="inner-info">
+                    <div class="primary-info">
+                        <p></p>
+                        <!-- <button class="button">Follow</button> -->
+                        <a class="button" href="chat.html">Message</a>
+                    </div>
+                    <div class="extra-info">
+                        <p class="posts-number"><span>0</span> posts</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h1 class="posts-heading">Posts</h1>
+        <div class="posts">
+            <!-- <div class="post">
+                <div class="image-container">
+                    <img src="../assets/images/face4.jpg" alt="" srcset="">
+                </div>
+                <div class="info">
+                    <a href="#" class="name">Amogelang Chaane</a>
+                    <p class="content"> Hello Everyone. I am new on Nexus. Happy to meet all of you.</p>
+                    <p class="date dim-text">12 February 2024 at 16:12</p>
+                </div>
+            </div>
+            <div class="post">
+                <div class="image-container">
+                    <img src="../assets/images/face4.jpg" alt="" srcset="">
+                </div>
+                <div class="info">
+                    <a href="#" class="name">Mary Anne</a>
+                    <p class="content"> Hello Everyone. I am new on Nexus. Happy to meet all of you.</p>
+                    <p class="date dim-text">12 February 2024 at 16:12</p>
+                </div>
+            </div>
+            <div class="post">
+                <div class="image-container">
+                    <img src="../assets/images/face4.jpg" alt="" srcset="">
+                </div>
+                <div class="info">
+                    <a href="#" class="name">Mark Bel</a>
+                    <p class="content"> Hello Everyone. I am new on Nexus. Happy to meet all of you.</p>
+                    <p class="date dim-text">12 February 2024 at 16:12</p>
+                </div>
+            </div> -->
+        </div>
+    </main>
+
+    <script>
+        const d = localStorage.getItem("userData")
+        if(!d) {
+            window.location.href='login.html';
+        }
+        
+        const userData = JSON.parse(d);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('userId');
+
+        
+        getPosts();
+        getProfile();
+
+        document.querySelector(".logout").addEventListener('click', () => {
+            localStorage.removeItem("userData");
+        })
+        
+        function getPosts() {
+            var xmlhttp = new XMLHttpRequest();
+            // const formData = new FormData();
+            // formData.append("action", "GetPosts");
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    const data = JSON.parse(this.response);
+                    if(data.response == "successfully retrieved posts" && data.posts.length > 0) {
+                        document.querySelector(".posts-number span").textContent = data.posts.length;
+                        const postsContainer = document.querySelector(".posts");
+
+                        // const noPosts = document.querySelector(".no-posts");
+                        const postsHeading = document.querySelector(".posts-heading");
+                        postsHeading.classList.remove("hidden");
+
+                        postsContainer.innerHTML = "";
+                        data.posts.forEach(i => {
+                            postsContainer.innerHTML += i.html;
+                        });
+                        // noPosts.classList.add("hidden");
+                        console.log();
+                    
+                    }
+                }
+            };
+            xmlhttp.open("GET", `../../backend/profile.php?action=GetPostsByUserId&userId=${userId}`, true);
+            xmlhttp.send();
+        }
+
+        function getProfile() {
+            var xmlhttp = new XMLHttpRequest();
+            // const formData = new FormData();
+            // formData.append("action", "GetPosts");
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    const data = JSON.parse(this.response);
+                    const info = document.querySelector(".posts");
+                    document.querySelector(".primary-info p").textContent = `${data.profile.FirstName} ${data.profile.LastName}`;
+                }
+            };
+            xmlhttp.open("GET", `../../backend/profile.php?action=GetProfile&userId=${userId}`, true);
+            xmlhttp.send();
+        }
+    </script>
+</body>
+</html>

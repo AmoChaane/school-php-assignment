@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../styles/login.css">
+</head>
+<body>
+    <form class="login">
+        <h2>NEXUS</h2>
+        <p>Please log in</p>
+        <input type="text" placeholder="Email" name="email"/>
+        <input type="password" placeholder="Password" name="password"/>
+        <p class="error" style="color: red; margin: 0;"></p>
+        <p class="success" style="color: green; margin: 0;"></p>
+        <input type="submit" value="Log In" name="submit"/>
+        <div class="links">
+            <a href="#">Forgot password</a>
+            <a href="register.html">Register</a>
+        </div>
+    </form>
+
+    <script>
+        const form = document.querySelector("form.login");
+        const error = document.querySelector(".error");
+        const success = document.querySelector(".success");
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                // console.log(this.responseText);
+                const data = JSON.parse(this.response);
+                if(data.response == "successfully logged in") {
+                    error.textContent = "";
+                    success.textContent = data.response;
+                    localStorage.setItem("userData", this.response);
+                    window.location.href='posts.html';
+                }
+                else {
+                    success.textContent = "";
+                    error.textContent = data.response;
+                }
+            }
+            };
+            xmlhttp.open("POST", "../../backend/login.php", true);
+            xmlhttp.send(formData);
+            
+        })
+</script>
+</body>
+</html>

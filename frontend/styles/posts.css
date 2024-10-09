@@ -147,6 +147,10 @@ main .main-inner {
     color: #494545;
 }
 
+.no-posts {
+    color: #494545;
+}
+
 .post {
     background-color: white;
     padding: 10px;
@@ -163,11 +167,18 @@ main .main-inner {
     justify-content: center;
 }
 
-.image-container img {
-    height: 50px;
-    width: 50px;
+.image-container .p {
+    height: 40px;
+    width: 40px;
     object-fit: cover;
     border-radius: 50%;
+    background-color: #EF5350;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bolder;
 }
 
 .name {
@@ -181,3 +192,11 @@ main .main-inner {
     gap: 5px;
 }
 
+.hidden {
+    display: none;
+}
+
+.logout {
+    /* text-decoration: none; */
+    color: white;
+}

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts</title>
+    <link rel="stylesheet" href="../styles/posts.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
+</head>
+<body>
+    <div class="nav">
+        <div class="div">
+            <h1>Nexus</h1>
+            <form class="search" style="display: flex; align-items: center; gap: 7px;">
+                <input type="text" placeholder="Search for a user">
+                <a class="material-symbols-outlined search-anchor" style="color: white; cursor: pointer; text-decoration: none;">search</a>
+            </form>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <a class="logout" href="login.html">Log Out</a>
+            <a href="profile.html?userId=" class="profile">
+                AC
+            </a>
+        </div>
+    </div>
+    <main>
+        <h1 class="welcome">Welcome, Amogelang Chaane</h1>
+        <div class="main-inner">
+            <form class="my-post">
+                <div class="inner">
+                    <div class="post-block">
+                        <div class="profile" style="background: #F0F3F4">AC</div>
+                        <textarea name="myPost" rows="4" cols="4"></textarea>
+                        <input type="text" name="userId" style="display: none;">
+                    </div>
+                    <div class="post-button-container">
+                        <button>Post</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div>
+            <h1 class="no-posts">No Posts Yet :(</h1>
+            <h1 class="posts-heading hidden">Posts</h1>
+            <div class="posts">
+                <!-- <div class="post">
+                    <div class="image-container">
+                        <div class="p">
+                            AC
+                        </div>
+                    </div>
+                    <div class="info">
+                        <a href="#" class="name">Amogelang Chaane</a>
+                        <p class="content"> Hello Everyone. I am new on Nexus. Happy to meet all of you.</p>
+                        <p class="date dim-text">12 February 2024 at 16:12</p>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </main>
+
+
+    <script>
+
+        const d = localStorage.getItem("userData")
+        if(!d) {
+            window.location.href='login.html';
+        }
+        
+        const userData = JSON.parse(d);
+
+        document.querySelector(".logout").addEventListener('click', () => {
+            localStorage.removeItem("userData");
+        })
+
+        
+        const el = document.querySelector('input[name="userId"]');
+        const userId = JSON.parse(localStorage.getItem("userData")).userId;
+        document.querySelector("a.profile").setAttribute("href", `profile.html?userId=${userId}`);
+        el.value = userId;
+        
+        getPosts();
+        setInterval(() => {
+            getPosts();
+        }, 2000);
+
+        // update page data
+        document.querySelector(".welcome").textContent = `Welcome, ${userData.firstName} ${userData.lastName}`;
+        document.querySelector("textarea").setAttribute("placeholder", `What's on your mind, ${userData.firstName}?`);
+
+        const form = document.querySelector("form.my-post");
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            formData.append("action", "CreatePost")
+            
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                const data = JSON.parse(this.response);
+                if(data.response == "successfully added post") {
+                    const postsContainer = document.querySelector(".posts");
+                    const noPosts = document.querySelector(".no-posts");
+                    const postsHeading = document.querySelector(".posts-heading");
+                    postsHeading.classList.remove("hidden");
+                    postsContainer.innerHTML = "";
+                    data.posts.forEach(i => {
+                        postsContainer.innerHTML += i.html;
+                    });
+                    noPosts.classList.add("hidden");
+                    console.log();
+                    
+                }
+            }
+            };
+            xmlhttp.open("POST", "../../backend/posts.php", true);
+            xmlhttp.send(formData);
+            
+        });
+
+        document.querySelector(".search-anchor").addEventListener('click', (e) => {
+            e.preventDefault();
+            const data = document.querySelector("form.search input").value;
+            window.location.href=`search.html?searchQuery=${data}`;
+            // var xmlhttp = new XMLHttpRequest();
+            // xmlhttp.onreadystatechange = function() {
+            // if (this.readyState == 4 && this.status == 200) {
+            //     const data = JSON.parse(this.response);
+            //     const finalResponse = Object.values(data.results); // an array of the results
+            //     console.log();
+                
+            // }
+            // };
+            // xmlhttp.open("GET", `../../backend/search.php?action=Search&search_query=${data}`, true);
+            // xmlhttp.send();
+        })
+
+
+        function getPosts() {
+            var xmlhttp = new XMLHttpRequest();
+            // const formData = new FormData();
+            // formData.append("action", "GetPosts");
+            xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                const data = JSON.parse(this.response);
+                if(data.response == "successfully retrieved posts" && data.posts.length > 0) {
+                    const postsContainer = document.querySelector(".posts");
+
+                    const noPosts = document.querySelector(".no-posts");
+                    const postsHeading = document.querySelector(".posts-heading");
+                    postsHeading.classList.remove("hidden");
+
+                    postsContainer.innerHTML = "";
+                    data.posts.forEach(i => {
+                        postsContainer.innerHTML += i.html;
+                    });
+                    noPosts.classList.add("hidden");
+                    console.log();
+                    
+                }
+            }
+            };
+            xmlhttp.open("GET", "../../backend/posts.php?action=GetPosts", true);
+            xmlhttp.send();
+        }
+
+    </script>
+</body>
+</html>
