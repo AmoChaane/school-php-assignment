@@ -12,9 +12,12 @@
             <h1>Nexus</h1>
             <a href="posts.html">Home</a>
         </div>
-        <a href="profile.html" class="profile">
-            AC
-        </a>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <a class="logout" href="login.html">Log Out</a>
+            <a href="profile.html?userId=" class="profile">
+                AC
+            </a>
+        </div>
     </div>
     <main>
         <form class="search-form">
@@ -41,6 +44,10 @@
         }
         
         const userData = JSON.parse(d);
+        
+        document.querySelector(".logout").addEventListener('click', () => {
+            localStorage.removeItem("userData");
+        });
 
         const urlParams = new URLSearchParams(window.location.search);
         const searchQuery = urlParams.get('searchQuery');
