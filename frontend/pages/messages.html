@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <link rel="stylesheet" href="../styles/messages.css">
+</head>
+<body>
+    <div class="nav">
+        <div class="div">
+            <h1>Nexus</h1>
+            <a class="home" href="posts.html">Home</a>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <a class="logout" href="login.html">Log Out</a>
+            <a href="profile.html?userId=" class="profile">
+                AC
+            </a>
+        </div>
+    </div>
+    <main>
+        <h1 class="chats-heading">Chats</h1>
+
+        <div class="messages">
+            <!-- <div class="message">
+                <div class="image-container">
+                    <div class="p">
+                        AC
+                    </div>
+                </div>
+                <div class="info">
+                    <p class="name">Amogelang Chaane <span>( 14:03) </span></p>
+                    <p class="content">Hi there...</p>
+                </div>
+            </div> -->
+        </div>
+    </main>
+
+    <script>
+        const d = localStorage.getItem("userData")
+        if(!d) {
+            window.location.href='login.html';
+        }
+        
+        const userData = JSON.parse(d);
+
+        getChats(userData.userId);
+
+        setInterval(() => {
+            getChats(userData.userId);
+        }, 2000);
+
+        function getChats(userId) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                const data = JSON.parse(this.response);
+
+                const messagesContainer = document.querySelector(".messages");
+
+                messagesContainer.innerHTML = "";
+                data.messages.forEach(i => {
+                    messagesContainer.innerHTML += i.html;
+                });
+                
+            }
+            };
+            xmlhttp.open("GET", `../../backend/chat.php?action=GetChats&myUserId=${userId}`, true);
+            xmlhttp.send();
+        }
+
+        function openChat(otherUserId, otherUserName) {
+            window.location.href=`chat.html?otherUserId=${otherUserId}&otherUserName=${otherUserName}`;
+        }
+    </script>
+</body>
+</html>

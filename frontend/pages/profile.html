@@ -11,6 +11,7 @@
         <div class="div">
             <h1>Nexus</h1>
             <a href="posts.html">Home</a>
+            <a href="messages.html" style="color: white;">Messages</a>
         </div>
         <a class="logout" href="login.html">Log Out</a>
     </div>
@@ -24,7 +25,7 @@
                     <div class="primary-info">
                         <p></p>
                         <!-- <button class="button">Follow</button> -->
-                        <a class="button" href="chat.html">Message</a>
+                        <a class="button" onclick="openChat()">Message</a>
                     </div>
                     <div class="extra-info">
                         <p class="posts-number"><span>0</span> posts</p>
@@ -77,6 +78,9 @@
 
         const urlParams = new URLSearchParams(window.location.search);
         const userId = urlParams.get('userId');
+        const name = urlParams.get('name');
+
+        if(userData.userId == userId) document.querySelector(".primary-info .button").style.display = 'none';
 
         
         getPosts();
@@ -128,6 +132,10 @@
             };
             xmlhttp.open("GET", `../../backend/profile.php?action=GetProfile&userId=${userId}`, true);
             xmlhttp.send();
+        }
+
+        function openChat() {
+            window.location.href=`chat.html?otherUserId=${userId}&otherUserName=${name}`;
         }
     </script>
 </body>

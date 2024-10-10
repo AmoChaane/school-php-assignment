@@ -8,11 +8,11 @@
 </head>
 <body>
     <div class="menu">
-        <a href="profile.html" class="back"><i class="fa fa-chevron-left"></i> <img src="../assets/images/face4.jpg" draggable="false"/></a>
+        <a href="#" onclick="history.back();" class="back"><i class="fa fa-chevron-left"></i> <img src="../assets/images/face4.jpg" draggable="false"/></a>
         <div class="name">Alex</div>
     </div>
     <ol class="chat">
-        <li class="other">
+        <!-- <li class="other">
             <div class="avatar"><img src="../assets/images/face4.jpg" draggable="false"/></div>
             <div class="msg">
                 <p>Hey!</p>
@@ -49,9 +49,11 @@
                 <p>So why do I feel like you're just chilling?</p>
                 <time>20:18</time>
             </div>
-        </li>
+        </li> -->
     </ol>
-    <input class="textarea" type="text" placeholder="Type here!"/><div class="emojis"></div>
+    <form class="send-message-form">
+        <input class="textarea" type="text" placeholder="Type here!"/>
+    </form>
 
     <script>
         const d = localStorage.getItem("userData")
@@ -60,6 +62,73 @@
         }
         
         const userData = JSON.parse(d);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const otherUserId = urlParams.get('otherUserId');
+        const otherUserName = urlParams.get('otherUserName');
+        document.querySelector(".menu .name").textContent = otherUserName;
+
+        getMessages(userData.userId, otherUserId);
+
+        setInterval(() => {
+            getMessages(userData.userId, otherUserId);
+        }, 2000);
+
+        function getMessages(userId, otherUserId) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                const data = JSON.parse(this.response);
+
+                const chatsContainer = document.querySelector(".chat");
+
+                chatsContainer.innerHTML = "";
+                data.messages.forEach(i => {
+                    chatsContainer.innerHTML += i.html;
+                });
+                
+            }
+            };
+            xmlhttp.open("GET", `../../backend/chat.php?action=GetMessages&myUserId=${userId}&otherUserId=${otherUserId}`, true);
+            xmlhttp.send();
+        }
+
+        const form = document.querySelector(".send-message-form");
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            sendMessage(form);
+        });
+
+        function sendMessage(form) {
+            let userId = userData.userId;
+            let otherUsersId = otherUserId;
+            let message = document.querySelector(".textarea").value;
+
+            const formData = new FormData(form);
+            formData.append("action", "SendMessage");
+            formData.append("myUserId", userId);
+            formData.append("otherUserId", otherUsersId);
+            formData.append("message", message);
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                const data = JSON.parse(this.response);
+
+                const chatsContainer = document.querySelector(".chat");
+
+                chatsContainer.innerHTML = "";
+                data.messages.forEach(i => {
+                    chatsContainer.innerHTML += i.html;
+                });
+                
+            }
+            };
+            // xmlhttp.open("POST", `../../backend/chat.php?action=SendMessage&myUserId=${userId}&otherUserId=${otherUserId}&message=${message}`, true);
+            xmlhttp.open("POST", `../../backend/chat.php`, true);
+            xmlhttp.send(formData);
+        }
     </script>
 </body>
 </html>

@@ -17,6 +17,7 @@ body {
     padding: 10px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .nav div {
@@ -29,6 +30,9 @@ body {
     color: white;
 }
 
+main {
+    padding: 30px;
+}
 
 .profile {
     padding: 10px;
@@ -43,73 +47,68 @@ body {
     text-decoration: none;
 }
 
-main {
-    padding: 30px;
+.logout, .home {
+    color: white;
 }
 
-.search-container {
+.chats-heading {
+    margin-bottom: 30px;
+    color: #494545;
+}
+
+.messages {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 70px;
 }
 
-.search-container input {
-    /* height: 40px; */
-    border-radius: 5px;
-    outline: none;
-    border: none;
-    padding: 13px 8px;
+.message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
 }
 
-.search-container button {
-    padding: 9px 12px;
-    cursor: pointer;
+
+.image-container .p {
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 50%;
     background-color: #EF5350;
     color: white;
-    border: none;
-    outline: none;
-    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bolder;
+}
+
+.info .name {
+    font-weight: 600;
+}
+
+.info .name span {
+    font-weight: 100;
+    color: #65676b;
 }
 
 @media (min-width: 800px) {
-    .search-container, .search-results {
+    .messages {
         width: 60vw;
     }
 }
 
 @media (min-width: 1000px) {
-    .search-container, .search-results {
+    .messages {
         width: 50vw;
     }
 }
 
 @media (min-width: 1250px) {
-    .search-container, .search-results {
+    .messages {
         width: 45vw;
     }
-}
-
-.search-results {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    margin-top: 10px;
-}
-
-.result {
-    border: 1px solid #65676b78;
-    border-radius: 5px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.view-profile {
-    color: #EF5350;
-}
-
-.logout, .home {
-    color: white;
 }

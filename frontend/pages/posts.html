@@ -15,6 +15,7 @@
                 <input type="text" placeholder="Search for a user">
                 <a class="material-symbols-outlined search-anchor" style="color: white; cursor: pointer; text-decoration: none;">search</a>
             </form>
+            <a href="messages.html" style="color: white;">Messages</a>
         </div>
         <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
             <a class="logout" href="login.html">Log Out</a>
@@ -161,7 +162,7 @@
                 }
             }
             };
-            xmlhttp.open("GET", "../../backend/posts.php?action=GetPosts", true);
+            xmlhttp.open("GET", `../../backend/posts.php?action=GetPosts&myUserId=${userId}`, true);
             xmlhttp.send();
         }
 

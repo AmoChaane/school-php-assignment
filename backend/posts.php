@@ -74,6 +74,7 @@
             $response["response"] = 'successfully retrieved posts';
             $sql = getPosts();
             $result = $connection->query($sql);
+            $myUserId = $_GET["myUserId"];
 
             if($result->num_rows > 0) {
                 $data = array();
@@ -85,6 +86,7 @@
                     $nameShortened = $firstName[0] . $lastName[0];
                     $content = $row["Content"];
                     $date = $row["created_at"];
+                    $you = $myUserId == $userId ? '<span style="font-weight: 600;">(You)</span>' : '';
 
                     $htmlContent = <<<EOD
                     <div class="post">
@@ -94,7 +96,7 @@
                             </div>
                         </div>
                         <div class="info">
-                            <a href="profile.html?userId=$userId" class="name">$firstName $lastName</a>
+                            <a href="profile.html?userId=$userId&name=$firstName" class="name">$firstName $lastName $you</a>
                             <p class="content">$content</p>
                             <p class="date dim-text">$date</p>
                         </div>
