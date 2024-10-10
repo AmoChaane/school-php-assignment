@@ -51,7 +51,7 @@
                         <div class="result">
                             <p class="name">Name: $firstName $lastName</p>
                             <p class="email">Email: $email</p>
-                            <a href="profile.html?userId=$userId" class="view-profile">View Profile</a>
+                            <a href="profile.html?userId=$userId&name=$firstName" class="view-profile">View Profile</a>
                         </div>
                         EOD;
                     $results[$key]['html'] = $htmlContent;
