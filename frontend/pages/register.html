@@ -34,16 +34,16 @@
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                const data = JSON.parse(this.response);
-                if(data.response == "Successfully created account") {
+                // const data = JSON.parse(this.response);
+                if(this.response == "Successfully created account") {
                     error.textContent = "";
-                    success.textContent = data.response;
+                    success.textContent = this.response;
                     localStorage.setItem("userData", this.response);
                     window.location.href='posts.html';
                 }
                 else {
                     success.textContent = "";
-                    error.textContent = data.response;
+                    error.textContent = this.response;
                 }
             }
             };
