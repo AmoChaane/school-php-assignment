@@ -2,9 +2,9 @@
 
     function connectToDatabase() {
         // Database credentials
-        $servername = "localhost";
+        $servername = "127.0.0.1";
         $username = "root";
-        $password = "@@AmoChaane200";
+        $password = "";
         $dbname = "social_network";
 
         // Create connection
