@@ -70,6 +70,8 @@
         
         const userData = JSON.parse(d);
 
+        document.querySelectorAll(".profile").forEach(i => i.textContent = `${userData.firstName[0]}${userData.lastName[0]}`);
+
         document.querySelector(".logout").addEventListener('click', () => {
             localStorage.removeItem("userData");
         })

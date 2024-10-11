@@ -45,6 +45,8 @@
         }
         
         const userData = JSON.parse(d);
+
+        document.querySelector(".profile").textContent = `${userData.firstName[0]}${userData.lastName[0]}`;
         
         document.querySelector(".logout").addEventListener('click', () => {
             localStorage.removeItem("userData");

@@ -41,6 +41,7 @@ body {
     cursor: pointer;
     font-weight: bolder;
     text-decoration: none;
+    aspect-ratio: 1;
 }
 
 main {

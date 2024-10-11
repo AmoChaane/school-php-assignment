@@ -45,6 +45,8 @@
         
         const userData = JSON.parse(d);
 
+        document.querySelector(".profile").textContent = `${userData.firstName[0]}${userData.lastName[0]}`;
+
         getChats(userData.userId);
 
         setInterval(() => {
